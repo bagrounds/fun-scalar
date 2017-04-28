@@ -12,7 +12,7 @@ Functions for working with scalars functionally
 
 ## [Test Coverage](https://bagrounds.gitlab.io/fun-scalar/coverage/lcov-report/index.html)
 
-## [API Docs](https://bagrounds.gitlab.io/fun-scalar/docs/index.html)
+## [API Docs](https://bagrounds.gitlab.io/fun-scalar/index.html)
 
 ## Dependencies
 
