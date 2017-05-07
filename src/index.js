@@ -20,7 +20,77 @@
     exp: curry(exp),
     log: curry(log),
     max: curry(max),
-    min: curry(min)
+    min: curry(min),
+    lt: curry(lt),
+    gt: curry(gt),
+    lte: curry(lte),
+    gte: curry(gte),
+    equal: curry(equal)
+  }
+
+  /**
+   *
+   * @function module:fun-scalar.equal
+   *
+   * @param {Number} a - reference
+   * @param {Number} b - subject
+   *
+   * @return {Boolean} if b === a
+   */
+  function equal (a, b) {
+    return b === a
+  }
+
+  /**
+   *
+   * @function module:fun-scalar.gte
+   *
+   * @param {Number} a - reference
+   * @param {Number} b - subject
+   *
+   * @return {Boolean} if b >= a
+   */
+  function gte (a, b) {
+    return b >= a
+  }
+
+  /**
+   *
+   * @function module:fun-scalar.gt
+   *
+   * @param {Number} a - reference
+   * @param {Number} b - subject
+   *
+   * @return {Boolean} if b > a
+   */
+  function gt (a, b) {
+    return b > a
+  }
+
+  /**
+   *
+   * @function module:fun-scalar.lte
+   *
+   * @param {Number} a - reference
+   * @param {Number} b - subject
+   *
+   * @return {Boolean} if b <= a
+   */
+  function lte (a, b) {
+    return b <= a
+  }
+
+  /**
+   *
+   * @function module:fun-scalar.lt
+   *
+   * @param {Number} a - reference
+   * @param {Number} b - subject
+   *
+   * @return {Boolean} if b < a
+   */
+  function lt (a, b) {
+    return b < a
   }
 
   /**
