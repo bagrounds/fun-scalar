@@ -40,6 +40,6 @@
     "uglify-js": "^3.0.0"
   },
   "dependencies": {
-    "fun-curry": "^0.2.6"
+    "fun-function": "^0.7.3"
   }
 }

@@ -6,26 +6,26 @@
   'use strict'
 
   /* imports */
-  var curry = require('fun-curry')
+  var fn = require('fun-function')
 
   /* exports */
   module.exports = {
     abs: abs,
     neg: neg,
-    sum: curry(sum),
-    sub: curry(sub),
-    dot: curry(dot),
-    div: curry(div),
-    mod: curry(mod),
-    exp: curry(exp),
-    log: curry(log),
-    max: curry(max),
-    min: curry(min),
-    lt: curry(lt),
-    gt: curry(gt),
-    lte: curry(lte),
-    gte: curry(gte),
-    equal: curry(equal)
+    sum: fn.curry(sum),
+    sub: fn.curry(sub),
+    dot: fn.curry(dot),
+    div: fn.curry(div),
+    mod: fn.curry(mod),
+    exp: fn.curry(exp),
+    log: fn.curry(log),
+    max: fn.curry(max),
+    min: fn.curry(min),
+    lt: fn.curry(lt),
+    gt: fn.curry(gt),
+    lte: fn.curry(lte),
+    gte: fn.curry(gte),
+    equal: fn.curry(equal)
   }
 
   /**
