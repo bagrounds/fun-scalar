@@ -1,0 +1,2 @@
+funScalar = require('../src')
+
