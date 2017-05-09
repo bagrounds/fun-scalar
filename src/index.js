@@ -25,7 +25,34 @@
     gt: fn.curry(gt),
     lte: fn.curry(lte),
     gte: fn.curry(gte),
-    equal: fn.curry(equal)
+    equal: fn.curry(equal),
+    threshold: fn.curry(threshold),
+    sigmoid: sigmoid
+  }
+
+  /**
+   *
+   * @function module:fun-scalar.sigmoid
+   *
+   * @param {Number} x - input to sigmoid function
+   *
+   * @return {Number} 1 / (1 + e^(-x))
+   */
+  function sigmoid (x) {
+    return 1 / (1 + exp(-x, Math.E))
+  }
+
+  /**
+   *
+   * @function module:fun-scalar.threshold
+   *
+   * @param {Number} t - threshold value
+   * @param {Number} n - number to threshold
+   *
+   * @return {Number} n >= t ? 1 : 0
+   */
+  function threshold (t, n) {
+    return n >= t ? 1 : 0
   }
 
   /**
