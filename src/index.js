@@ -26,8 +26,37 @@
     lte: fn.curry(lte),
     gte: fn.curry(gte),
     equal: fn.curry(equal),
+    near: fn.curry(near),
+    eNear: fn.curry(eNear),
     threshold: fn.curry(threshold),
     sigmoid: sigmoid
+  }
+
+  /**
+   *
+   * @function module:fun-scalar.eNear
+   *
+   * @param {Number} a - number to check b against
+   * @param {Number} b - number to check against a
+   *
+   * @return {Boolean} if |a - b| < Number.EPSILON
+   */
+  function eNear (a, b) {
+    return near(Number.EPSILON, a, b)
+  }
+
+  /**
+   *
+   * @function module:fun-scalar.near
+   *
+   * @param {Number} delta - threshold for nearness
+   * @param {Number} a - number to check b against
+   * @param {Number} b - number to check against a
+   *
+   * @return {Boolean} if |a - b| < delta
+   */
+  function near (delta, a, b) {
+    return Math.abs(a - b) < delta
   }
 
   /**

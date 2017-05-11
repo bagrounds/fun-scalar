@@ -9,6 +9,13 @@
 
   /* exports */
   module.exports = [
+    [[0 - Number.EPSILON, 0], false, 'eNear'],
+    [[0 + Number.EPSILON, 0], false, 'eNear'],
+    [[0.2 - 0.3 + 0.1, 0], true, 'eNear'],
+    [[0.1, 1, 1.11], false, 'near'],
+    [[0.1, 1, 0.89], false, 'near'],
+    [[0.1, 1, 1.09], true, 'near'],
+    [[0.1, 1, 0.91], true, 'near'],
     [[0], 0.5, 'sigmoid'],
     [[-Infinity], 0, 'sigmoid'],
     [[Infinity], 1, 'sigmoid'],
