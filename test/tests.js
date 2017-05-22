@@ -9,6 +9,9 @@
 
   /* exports */
   module.exports = [
+    [[3], 3, 'rectify'],
+    [[-2], 0, 'rectify'],
+    [[-1], 0, 'rectify'],
     [[0 - Number.EPSILON, 0], false, 'eNear'],
     [[0 + Number.EPSILON, 0], false, 'eNear'],
     [[0.2 - 0.3 + 0.1, 0], true, 'eNear'],

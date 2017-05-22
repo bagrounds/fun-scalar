@@ -29,7 +29,20 @@
     near: fn.curry(near),
     eNear: fn.curry(eNear),
     threshold: fn.curry(threshold),
-    sigmoid: sigmoid
+    sigmoid: sigmoid,
+    rectify: rectify
+  }
+
+  /**
+   *
+   * @function module:fun-scalar.rectify
+   *
+   * @param {Number} x - number to rectify
+   *
+   * @return {Number} max(0, x)
+   */
+  function rectify (x) {
+    return max(0, x)
   }
 
   /**
