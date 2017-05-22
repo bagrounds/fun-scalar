@@ -41,7 +41,10 @@
     argMax(semverStringToNumber)
   ])
 
-  var formatCommand = string.prepend('npm version ')
+  var formatCommand = fn.compose(
+    string.prepend('npm version '),
+    string.apppend(' && git push origin master && npm publish')
+  )
 
   var semverUpdateFromGitLog = fn.composeAll([
     predicate.ifThenElse(

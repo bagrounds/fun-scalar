@@ -14,6 +14,16 @@
       "pages"
     ]
   },
+  "publish": {
+    "stage": "deploy",
+    "script": [
+      "./script/update.js"
+    ],
+    "environment": "npm",
+    "only": [
+      "master"
+    ]
+  },
   "pages": {
     "stage": "deploy",
     "script": [
