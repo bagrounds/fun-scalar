@@ -43,7 +43,7 @@
 
   var formatCommand = fn.compose(
     string.prepend('npm version '),
-    string.apppend(' && git push origin master && npm publish')
+    string.append(' && git push origin master && npm publish')
   )
 
   var semverUpdateFromGitLog = fn.composeAll([
