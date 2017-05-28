@@ -1,5 +1,12 @@
 {
   "image": "node:4",
+  "cache": {
+    "untracked": true,
+    "key": "$CI_BUILD_REF_NAME",
+    "paths": [
+      "node_modules/"
+    ]
+  },
   "stages": [
     "test",
     "deploy"
