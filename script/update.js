@@ -66,12 +66,18 @@
     fn.tee(fn.compose(console.log, fn.k('nothing to do')))
   )
 
-  function runCommand (command) {
-    return async.map(
-      fn.tee(console.log),
-      async.contramap(fn.k(command), fn.curry(child.exec, 2))
-    )
-  }
+  var runCommand = fn.curry(function childExec (command, callback) {
+    child.exec(command, function (error, stdout, stderr) {
+      if (error) {
+        callback(error)
+        return
+      }
+
+      console.log('stdout: ' + stdout)
+      console.log('stderr: ' + stderr)
+      callback(null, stdout)
+    })
+  })
 
   var release = async.composeAll([
     runCommand(NPM_PUBLISH),
