@@ -1,8 +1,6 @@
 #!/bin/sh
 
-rm -rf public coverage docs node_modules
-
-npm install
+rm -rf public coverage docs
 
 npm run readme
 

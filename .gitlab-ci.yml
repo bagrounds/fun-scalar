@@ -8,13 +8,19 @@
     ]
   },
   "stages": [
+    "setup",
     "test",
     "deploy"
   ],
+  "setup": {
+    "stage": "setup",
+    "script": [
+      "npm install"
+    ]
+  },
   "test": {
     "stage": "test",
     "script": [
-      "npm install",
       "npm test"
     ],
     "except": [
