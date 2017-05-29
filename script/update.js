@@ -41,15 +41,11 @@
     argMax(semverStringToNumber)
   ])
 
-  var GIT_PUSH = 'git remote set-url --push origin ' +
-    'https://bagrounds:$ACCESS_TOKEN@gitlab.com/bagrounds/fun-scalar.git' +
-    ' && git push origin master' +
-    ' && npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN'
-
-  var formatCommand = fn.compose(
-    string.prepend('npm version '),
-    string.append(' && ' + GIT_PUSH + ' && npm publish')
-  )
+  var NPM_PUBLISH = 'npm publish'
+  var NPM_SET = 'npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN'
+  var GIT_PUSH = 'git push origin master'
+  var GIT_SET_URL = 'git remote set-url --push origin ' +
+    'https://bagrounds:$ACCESS_TOKEN@gitlab.com/bagrounds/fun-scalar.git'
 
   var semverUpdateFromGitLog = fn.composeAll([
     predicate.ifThenElse(
@@ -70,7 +66,20 @@
     fn.tee(fn.compose(console.log, fn.k('nothing to do')))
   )
 
-  var release = async.contramap(formatCommand, fn.curry(child.exec, 2))
+  function runCommand (command) {
+    return async.map(
+      fn.tee(console.log),
+      async.contramap(fn.k(command), fn.curry(child.exec, 2))
+    )
+  }
+
+  var release = async.composeAll([
+    runCommand(NPM_PUBLISH),
+    runCommand(NPM_SET),
+    runCommand(GIT_PUSH),
+    runCommand(GIT_SET_URL),
+    async.contramap(string.prepend('npm version '), fn.curry(child.exec, 2))
+  ])
 
   var isSemver = array.map(predicate.equal, ['major', 'minor', 'patch'])
     .reduce(predicate.or, predicate.f)
