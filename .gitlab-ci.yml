@@ -7,7 +7,7 @@
   ],
   "setup": {
     "stage": "setup",
-    "cache": {
+    "artifacts": {
       "paths": [
         "node_modules/"
       ]
@@ -18,6 +18,9 @@
   },
   "test": {
     "stage": "test",
+    "dependencies": [
+      "setup"
+    ],
     "script": [
       "npm test"
     ],
@@ -27,6 +30,9 @@
   },
   "lint": {
     "stage": "test",
+    "dependencies": [
+      "setup"
+    ],
     "script": [
       "npm run lint"
     ],
@@ -36,6 +42,9 @@
   },
   "publish": {
     "stage": "deploy",
+    "dependencies": [
+      "setup"
+    ],
     "script": [
       "./script/update.js"
     ],
@@ -46,6 +55,9 @@
   },
   "pages": {
     "stage": "deploy",
+    "dependencies": [
+      "setup"
+    ],
     "script": [
       "npm run pages"
     ],
