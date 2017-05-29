@@ -43,6 +43,7 @@
 
   var GIT_PUSH = 'git remote set-url --push origin ' +
     'https://@gitlab.com/bagrounds/fun-scalar.git' +
+    ' && git push origin master' +
     ' && npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN'
 
   var formatCommand = fn.compose(
