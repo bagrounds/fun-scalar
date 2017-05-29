@@ -42,7 +42,7 @@
   ])
 
   var GIT_PUSH = 'git remote set-url --push origin ' +
-    'https://bagrounds:$GITLAB_AUTH_TOKEN@gitlab.com/bagrounds/fun-scalar.git' +
+    'https://bagrounds:$ACCESS_TOKEN@gitlab.com/bagrounds/fun-scalar.git' +
     ' && git push origin master' +
     ' && npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN'
 
