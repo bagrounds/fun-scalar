@@ -1,12 +1,5 @@
 {
   "image": "node:4",
-  "cache": {
-    "untracked": true,
-    "key": "$CI_COMMIT_REF_NAME",
-    "paths": [
-      "node_modules/"
-    ]
-  },
   "stages": [
     "setup",
     "test",
@@ -14,6 +7,11 @@
   ],
   "setup": {
     "stage": "setup",
+    "cache": {
+      "paths": [
+        "node_modules/"
+      ]
+    },
     "script": [
       "npm install"
     ]
