@@ -41,9 +41,12 @@
     argMax(semverStringToNumber)
   ])
 
+  var GIT_PUSH = 'git remote set-url --push origin ' +
+    'https://@gitlab.com/bagrounds/fun-scalar.git'
+
   var formatCommand = fn.compose(
     string.prepend('npm version '),
-    string.append(' && git push origin master && npm publish')
+    string.append(' && ' + GIT_PUSH + ' && npm publish')
   )
 
   var semverUpdateFromGitLog = fn.composeAll([
