@@ -27,6 +27,15 @@
       "pages"
     ]
   },
+  "lint": {
+    "stage": "test",
+    "script": [
+      "npm run lint"
+    ],
+    "except": [
+      "pages"
+    ]
+  },
   "publish": {
     "stage": "deploy",
     "script": [

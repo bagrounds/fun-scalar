@@ -5,7 +5,6 @@
   "main": "src/index.js",
   "browser": "dist/bundle.js",
   "scripts": {
-    "pretest": "npm run lint",
     "test": "tap -Rtap --coverage-report=text-summary ./test/index.js",
     "coverage": "tap --coverage-report=lcov ./test/index.js",
     "predependencies": "mkdir -p img",
