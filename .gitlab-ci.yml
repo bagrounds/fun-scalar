@@ -1,40 +1,19 @@
 {
   "image": "node:4",
   "stages": [
-    "setup",
     "test",
     "deploy"
   ],
-  "setup": {
-    "stage": "setup",
+  "test": {
+    "stage": "test",
     "artifacts": {
       "paths": [
         "node_modules/"
       ]
     },
     "script": [
-      "npm install"
-    ]
-  },
-  "test": {
-    "stage": "test",
-    "dependencies": [
-      "setup"
-    ],
-    "script": [
+      "npm install",
       "npm test"
-    ],
-    "except": [
-      "pages"
-    ]
-  },
-  "lint": {
-    "stage": "test",
-    "dependencies": [
-      "setup"
-    ],
-    "script": [
-      "npm run lint"
     ],
     "except": [
       "pages"
@@ -43,7 +22,7 @@
   "publish": {
     "stage": "deploy",
     "dependencies": [
-      "setup"
+      "test"
     ],
     "script": [
       "./script/update.js"
@@ -56,7 +35,7 @@
   "pages": {
     "stage": "deploy",
     "dependencies": [
-      "setup"
+      "test"
     ],
     "script": [
       "npm run pages"
