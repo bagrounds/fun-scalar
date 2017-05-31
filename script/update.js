@@ -52,6 +52,7 @@
   var CD = 'cd fun-scalar'
   var GIT_LOG = 'git log --oneline'
   var PREFIX = GIT_CLONE + ' && ' + CD + ' && npm version '
+  var GIT_COMMIT_SKIP = 'git commit --allow-empty -m "[skip ci]"'
 
   var semverUpdateFromGitLog = fn.composeAll([
     predicate.ifThenElse(
@@ -81,6 +82,7 @@
     runCommand(NPM_PUBLISH),
     runCommand(NPM_SET),
     runCommand(GIT_PUSH),
+    runCommand(GIT_COMMIT_SKIP),
     runCommand(GIT_SET_URL),
     async.contramap(string.prepend(PREFIX), fn.curry(child.exec, 2))
   ])
