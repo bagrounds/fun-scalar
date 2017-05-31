@@ -50,6 +50,8 @@
   var GIT_SET_URL = 'git remote set-url --push origin ' + REPO
   var GIT_CLONE = 'git clone ' + REPO
   var CD = 'cd fun-scalar'
+  var GIT_LOG = 'git log --oneline'
+  var PREFIX = GIT_CLONE + ' && ' + CD + ' && npm version '
 
   var semverUpdateFromGitLog = fn.composeAll([
     predicate.ifThenElse(
@@ -63,8 +65,6 @@
     delegate('split', [os.EOL])
   ])
 
-  var GIT_LOG = 'git log --oneline'
-
   var logNothing = fn.compose(
     async.of,
     fn.tee(fn.compose(console.log, fn.k('nothing to do')))
@@ -76,8 +76,6 @@
       async.contramap(fn.k(command), fn.curry(child.exec, 2))
     )
   }
-
-  var PREFIX = GIT_CLONE + ' && ' + CD + ' && npm version '
 
   var release = async.composeAll([
     runCommand(NPM_PUBLISH),
