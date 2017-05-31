@@ -48,10 +48,9 @@
   var NPM_SET = 'npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN'
   var GIT_PUSH = 'git push origin master'
   var GIT_SET_URL = 'git remote set-url --push origin ' + REPO
-  var GIT_CLONE = 'git clone ' + REPO
-  var CD = 'cd fun-scalar'
+  var GIT_CHECKOUT_MASTER = 'git checkout master'
   var GIT_LOG = 'git log --oneline'
-  var PREFIX = GIT_CLONE + ' && ' + CD + ' && npm version '
+  var PREFIX = GIT_CHECKOUT_MASTER + ' && npm version '
   var GIT_COMMIT_SKIP = 'git commit --allow-empty -m "[skip ci]"'
 
   var semverUpdateFromGitLog = fn.composeAll([
