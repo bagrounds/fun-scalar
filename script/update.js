@@ -13,6 +13,8 @@
   var string = require('fun-string')
   var object = require('fun-object')
 
+  var version = require('../package.json').version
+
   var semverStringToNumber = funCase([
     {
       p: predicate.match(/^\[PATCH\]/),
@@ -44,8 +46,7 @@
   var NPM_PUBLISH = 'npm publish'
   var NPM_SET = 'npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN'
   var GIT_PUSH = 'git push origin master'
-  var GIT_COMMIT = 'git commit -m ' +
-    '"$(node -pe \'require("./package").version\')"'
+  var GIT_COMMIT = 'git commit -m "' + version + '"'
   var GIT_ADD = 'git add .'
   var GIT_SET_URL = 'git remote set-url --push origin ' +
     'https://bagrounds:$ACCESS_TOKEN@gitlab.com/bagrounds/fun-scalar.git'
