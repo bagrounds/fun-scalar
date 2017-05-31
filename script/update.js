@@ -13,8 +13,6 @@
   var string = require('fun-string')
   var object = require('fun-object')
 
-  var version = require('../package.json').version
-
   var semverStringToNumber = funCase([
     {
       p: predicate.match(/^\[PATCH\]/),
@@ -43,13 +41,15 @@
     argMax(semverStringToNumber)
   ])
 
+  var REPO = 'https://bagrounds:$ACCESS_TOKEN' +
+    '@gitlab.com/bagrounds/fun-scalar.git'
+
   var NPM_PUBLISH = 'npm publish'
   var NPM_SET = 'npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN'
   var GIT_PUSH = 'git push origin master'
-  var GIT_COMMIT = 'git commit -m "' + version + '"'
-  var GIT_ADD = 'git add .'
-  var GIT_SET_URL = 'git remote set-url --push origin ' +
-    'https://bagrounds:$ACCESS_TOKEN@gitlab.com/bagrounds/fun-scalar.git'
+  var GIT_SET_URL = 'git remote set-url --push origin ' + REPO
+  var GIT_CLONE = 'git clone ' + REPO
+  var CD = 'cd fun-scalar'
 
   var semverUpdateFromGitLog = fn.composeAll([
     predicate.ifThenElse(
@@ -77,14 +77,14 @@
     )
   }
 
+  var PREFIX = GIT_CLONE + ' && ' + CD + ' && npm version '
+
   var release = async.composeAll([
     runCommand(NPM_PUBLISH),
     runCommand(NPM_SET),
     runCommand(GIT_PUSH),
     runCommand(GIT_SET_URL),
-    runCommand(GIT_COMMIT),
-    runCommand(GIT_ADD),
-    async.contramap(string.prepend('npm version '), fn.curry(child.exec, 2))
+    async.contramap(string.prepend(PREFIX), fn.curry(child.exec, 2))
   ])
 
   var isSemver = array.map(predicate.equal, ['major', 'minor', 'patch'])
