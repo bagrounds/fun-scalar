@@ -1,6 +1,6 @@
 {
   "name": "fun-scalar",
-  "version": "0.5.5",
+  "version": "0.5.6",
   "description": "Functions for working with scalars functionally",
   "main": "src/index.js",
   "browser": "dist/bundle.js",
