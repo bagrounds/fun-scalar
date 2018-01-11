@@ -6,32 +6,7 @@
   'use strict'
 
   /* imports */
-  var fn = require('fun-function')
-
-  /* exports */
-  module.exports = {
-    abs: abs,
-    neg: neg,
-    sum: fn.curry(sum),
-    sub: fn.curry(sub),
-    dot: fn.curry(dot),
-    div: fn.curry(div),
-    mod: fn.curry(mod),
-    exp: fn.curry(exp),
-    log: fn.curry(log),
-    max: fn.curry(max),
-    min: fn.curry(min),
-    lt: fn.curry(lt),
-    gt: fn.curry(gt),
-    lte: fn.curry(lte),
-    gte: fn.curry(gte),
-    equal: fn.curry(equal),
-    near: fn.curry(near),
-    eNear: fn.curry(eNear),
-    threshold: fn.curry(threshold),
-    sigmoid: sigmoid,
-    rectify: rectify
-  }
+  const curry = require('fun-curry')
 
   /**
    *
@@ -41,9 +16,7 @@
    *
    * @return {Number} max(0, x)
    */
-  function rectify (x) {
-    return max(0, x)
-  }
+  const rectify = x => max(0, x)
 
   /**
    *
@@ -54,9 +27,7 @@
    *
    * @return {Boolean} if |a - b| < Number.EPSILON
    */
-  function eNear (a, b) {
-    return near(Number.EPSILON, a, b)
-  }
+  const eNear = (a, b) => near(Number.EPSILON, a, b)
 
   /**
    *
@@ -68,9 +39,7 @@
    *
    * @return {Boolean} if |a - b| < delta
    */
-  function near (delta, a, b) {
-    return Math.abs(a - b) < delta
-  }
+  const near = (delta, a, b) => Math.abs(a - b) < delta
 
   /**
    *
@@ -80,9 +49,7 @@
    *
    * @return {Number} 1 / (1 + e^(-x))
    */
-  function sigmoid (x) {
-    return 1 / (1 + exp(-x, Math.E))
-  }
+  const sigmoid = x => 1 / (1 + exp(-x, Math.E))
 
   /**
    *
@@ -93,9 +60,7 @@
    *
    * @return {Number} n >= t ? 1 : 0
    */
-  function threshold (t, n) {
-    return n >= t ? 1 : 0
-  }
+  const threshold = (t, n) => n >= t ? 1 : 0
 
   /**
    *
@@ -106,9 +71,7 @@
    *
    * @return {Boolean} if b === a
    */
-  function equal (a, b) {
-    return b === a
-  }
+  const equal = (a, b) => b === a
 
   /**
    *
@@ -119,9 +82,7 @@
    *
    * @return {Boolean} if b >= a
    */
-  function gte (a, b) {
-    return b >= a
-  }
+  const gte = (a, b) => b >= a
 
   /**
    *
@@ -132,9 +93,7 @@
    *
    * @return {Boolean} if b > a
    */
-  function gt (a, b) {
-    return b > a
-  }
+  const gt = (a, b) => b > a
 
   /**
    *
@@ -145,9 +104,7 @@
    *
    * @return {Boolean} if b <= a
    */
-  function lte (a, b) {
-    return b <= a
-  }
+  const lte = (a, b) => b <= a
 
   /**
    *
@@ -158,9 +115,7 @@
    *
    * @return {Boolean} if b < a
    */
-  function lt (a, b) {
-    return b < a
-  }
+  const lt = (a, b) => b < a
 
   /**
    *
@@ -171,9 +126,7 @@
    *
    * @return {Number} b % a
    */
-  function mod (a, b) {
-    return b % a
-  }
+  const mod = (a, b) => b % a
 
   /**
    *
@@ -184,9 +137,7 @@
    *
    * @return {Number} b - a
    */
-  function sub (a, b) {
-    return b - a
-  }
+  const sub = (a, b) => b - a
 
   /**
    *
@@ -197,9 +148,7 @@
    *
    * @return {Number} b * a
    */
-  function dot (a, b) {
-    return a * b
-  }
+  const mul = (a, b) => a * b
 
   /**
    *
@@ -210,9 +159,7 @@
    *
    * @return {Number} b / a
    */
-  function div (a, b) {
-    return b / a
-  }
+  const div = (a, b) => b / a
 
   /**
    *
@@ -223,9 +170,7 @@
    *
    * @return {Number} b + a
    */
-  function sum (a, b) {
-    return a + b
-  }
+  const add = (a, b) => a + b
 
   /**
    *
@@ -236,9 +181,7 @@
    *
    * @return {Number} b ^ a
    */
-  function exp (a, b) {
-    return Math.pow(b, a)
-  }
+  const exp = (a, b) => Math.pow(b, a)
 
   /**
    *
@@ -249,9 +192,7 @@
    *
    * @return {Number} log_base(argument)
    */
-  function log (base, argument) {
-    return Math.log(argument) / Math.log(base)
-  }
+  const log = (base, argument) => Math.log(argument) / Math.log(base)
 
   /**
    *
@@ -262,9 +203,7 @@
    *
    * @return {Number} a > b ? a : b
    */
-  function max (a, b) {
-    return a > b ? a : b
-  }
+  const max = (a, b) => a > b ? a : b
 
   /**
    *
@@ -275,9 +214,7 @@
    *
    * @return {Number} a < b ? a : b
    */
-  function min (a, b) {
-    return a < b ? a : b
-  }
+  const min = (a, b) => a < b ? a : b
 
   /**
    *
@@ -287,9 +224,7 @@
    *
    * @return {Number} |a|
    */
-  function abs (a) {
-    return Math.abs(a)
-  }
+  const abs = a => Math.abs(a)
 
   /**
    *
@@ -299,8 +234,15 @@
    *
    * @return {Number} -a
    */
-  function neg (a) {
-    return 0 - a
-  }
+  const neg = a => 0 - a
+
+  /* exports */
+  const api = { abs, neg, add, sub, mul, div, mod, exp, log, max, min, lt, gt,
+    lte, gte, equal, near, eNear, threshold, sigmoid, rectify }
+
+  const set = (k, v, o) => Object.assign(o, { [k]: v })
+  const map = (f, o) => Object.keys(o).reduce((r, k) => set(k, f(o[k]), r), {})
+
+  module.exports = map(curry, api)
 })()
 

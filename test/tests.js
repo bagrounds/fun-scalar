@@ -49,9 +49,9 @@
     [[8], -8, 'neg'],
     [[8], 8, 'abs'],
     [[-9], 9, 'abs'],
-    [[2, 3], 5, 'sum'],
+    [[2, 3], 5, 'add'],
     [[2, 3], 1, 'sub'],
-    [[2, 3], 6, 'dot'],
+    [[2, 3], 6, 'mul'],
     [[3, 6], 2, 'div']
   ].map(arrange({ inputs: 0, predicate: 1, contra: 2 }))
     .map(object.ap({

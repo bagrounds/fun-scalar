@@ -32,26 +32,27 @@
   },
   "homepage": "https://gitlab.com/bagrounds/fun-scalar#README",
   "devDependencies": {
-    "browserify": "^14.3.0",
+    "browserify": "15.1.0",
     "docdash": "^0.4.0",
-    "eslint": "4.0.0-beta.0",
+    "eslint": "4.15.0",
     "fun-arrange": "0.1.4",
-    "fun-array": "^0.8.1",
+    "fun-array": "0.11.0",
     "fun-async": "^0.2.0",
     "fun-case": "0.1.4",
     "fun-delegate": "^0.1.0",
-    "fun-object": "^0.6.3",
+    "fun-function": "^0.10.1",
+    "fun-object": "0.7.1",
     "fun-predicate": "^0.16.0",
-    "fun-string": "^0.2.0",
+    "fun-string": "0.5.0",
     "fun-test": "^0.24.1",
     "fun-test-runner": "^0.9.1",
-    "jsdoc": "^3.4.3",
-    "madge": "^1.6.0",
-    "next-update": "^1.5.1",
-    "tap": "10.3.2",
-    "uglify-js": "3.0.10"
+    "jsdoc": "^3.5.5",
+    "madge": "2.2.0",
+    "next-update": "3.6.0",
+    "tap": "11.0.1",
+    "uglify-js-es6": "^2.8.9"
   },
   "dependencies": {
-    "fun-function": "0.9.1"
+    "fun-curry": "^0.3.1"
   }
 }
