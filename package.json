@@ -40,7 +40,7 @@
     "fun-async": "^0.2.0",
     "fun-case": "0.1.4",
     "fun-delegate": "^0.1.0",
-    "fun-function": "^0.10.1",
+    "fun-function": "^0.10.2",
     "fun-object": "0.7.1",
     "fun-predicate": "^0.16.0",
     "fun-string": "0.5.0",
