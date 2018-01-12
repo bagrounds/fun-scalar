@@ -2,18 +2,26 @@
 ;(function () {
   'use strict'
 
-  var predicate = require('fun-predicate')
-  var child = require('child_process')
-  var async = require('fun-async')
-  var delegate = require('fun-delegate')
-  var array = require('fun-array')
-  var os = require('os')
-  var fn = require('fun-function')
-  var funCase = require('fun-case')
-  var string = require('fun-string')
-  var object = require('fun-object')
+  const predicate = require('fun-predicate')
+  const child = require('child_process')
+  const async = require('fun-async')
+  const delegate = require('fun-delegate')
+  const array = require('fun-array')
+  const os = require('os')
+  const fn = require('fun-function')
+  const funCase = require('fun-case')
+  const string = require('fun-string')
+  const object = require('fun-object')
 
-  var semverStringToNumber = funCase([
+  const tee = fn.curry((...args) => {
+    console.log(`tee args(${args.length}): ${JSON.stringify(args)}`)
+    args[0](args[1])
+    return args[1]
+  }, 2)
+
+  const log = tee(console.log)
+
+  const semverStringToNumber = funCase([
     {
       p: predicate.match(/^\[PATCH\]/),
       f: fn.k(0)
@@ -28,31 +36,36 @@
     }
   ])
 
-  var argMax = fn.curry(function argMax (f, args) {
-    return args[args.reduce(function (max, value, i) {
-      return f(value) > f(max.value) ? { value: value, i: i } : max
-    }, { value: args[0], i: 0 }).i]
-  })
+  const argMax = fn.curry(
+    (f, args) => args[
+      args.reduce(
+        (max, value, i) => f(value) > f(max.value)
+          ? { value: value, i: i }
+          : max,
+        { value: args[0], i: 0 }
+      ).i
+    ]
+  )
 
-  var semverUpdateFromPartial = fn.composeAll([
+  const semverUpdateFromPartial = fn.composeAll([
     delegate('toLowerCase', []),
     array.get(1),
     delegate('match', [/^\[([^\]]+)]/]),
     argMax(semverStringToNumber)
   ])
 
-  var REPO = 'https://bagrounds:$ACCESS_TOKEN' +
+  const REPO = 'https://bagrounds:$ACCESS_TOKEN' +
     '@gitlab.com/bagrounds/fun-scalar.git'
 
-  var NPM_PUBLISH = 'npm publish'
-  var NPM_SET = 'npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN'
-  var GIT_PUSH = 'git push origin master'
-  var GIT_SET_URL = 'git remote set-url --push origin ' + REPO
-  var GIT_CHECKOUT_MASTER = 'git checkout master'
-  var GIT_LOG = 'git log --oneline'
-  var PREFIX = GIT_CHECKOUT_MASTER + ' && npm version '
+  const NPM_PUBLISH = 'npm publish'
+  const NPM_SET = 'npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN'
+  const GIT_PUSH = 'git push origin master'
+  const GIT_SET_URL = `git remote set-url --push origin ${REPO}`
+  const GIT_CHECKOUT_MASTER = 'git checkout master'
+  const GIT_LOG = 'git log --oneline'
+  const PREFIX = `${GIT_CHECKOUT_MASTER} && npm version `
 
-  var semverUpdateFromGitLog = fn.composeAll([
+  const semverUpdateFromGitLog = fn.composeAll([
     predicate.ifThenElse(
       fn.compose(predicate.truthy, object.get('length')),
       semverUpdateFromPartial,
@@ -64,52 +77,42 @@
     delegate('split', [os.EOL])
   ])
 
-  var logNothing = fn.compose(
+  const logNothing = fn.compose(
     async.of,
-    fn.tee(fn.compose(console.log, fn.k('nothing to do')))
+    tee(fn.compose(console.log, fn.k('nothing to do')))
   )
 
-  function runCommand (command) {
-    return async.contramap(
-      fn.tee(console.log),
-      async.contramap(fn.k(command), fn.curry(child.exec, 2))
-    )
-  }
+  const exec = fn.curry(child.exec, 2)
 
-  var release = async.composeAll([
+  const runCommand = command => async.contramap(
+    log,
+    async.contramap(fn.k(command), exec)
+  )
+
+  const release = async.composeAll([
     runCommand(NPM_PUBLISH),
     runCommand(NPM_SET),
     runCommand(GIT_PUSH),
     runCommand(GIT_SET_URL),
-    async.contramap(string.prepend(PREFIX), fn.curry(child.exec, 2))
+    async.contramap(string.prepend(PREFIX), exec)
   ])
 
-  var isSemver = array.map(predicate.equal, ['major', 'minor', 'patch'])
+  const isSemver = array.map(predicate.equal, ['major', 'minor', 'patch'])
     .reduce(predicate.or, predicate.f)
 
-  var maybeRelease = fn.curry(function maybeRelease (mmp, callback) {
-    if (isSemver(mmp)) {
-      release(mmp, callback)
-      return
-    }
+  const handleResults = (error, stdout, stderror) => {
+    if (error) throw error
 
-    logNothing(mmp, callback)
-  })
+    if (stdout) console.log('stdout: ' + stdout)
+    if (stderror) console.error('stderror: ' + stderror)
+  }
+
+  const main = () => fn.composeAll([
+    async.compose(predicate.ifThenElse(isSemver, release, logNothing)),
+    async.map(semverUpdateFromGitLog),
+    exec
+  ])(GIT_LOG)(handleResults)
 
   main()
-
-  function main () {
-    fn.composeAll([
-      async.compose(maybeRelease),
-      async.map(semverUpdateFromGitLog),
-      fn.curry(child.exec, 2)
-    ])(GIT_LOG)(function CALLBACK (error, stdout, stderror) {
-      if (error) {
-        throw error
-      }
-
-      console.log('stdout: ' + stdout)
-    })
-  }
 })()
 
